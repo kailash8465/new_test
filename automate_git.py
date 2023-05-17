@@ -6,7 +6,7 @@ g = Github(access_token)
 
 # Replace 'OWNER' and 'REPO' with the owner and repository name
 owner = 'Bhargavi-stanleymldl'
-repo_name = 'automation-repo'
+repo_name = 'Bhargavi'
 # Get the repository
 repo = g.get_repo(f'{owner}/{repo_name}')
 
