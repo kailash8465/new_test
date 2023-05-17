@@ -1,12 +1,12 @@
 from github import Github
 # Replace 'ACCESS_TOKEN' with your actual access token
-access_token = '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'
+access_token = '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'
 # Create a PyGithub instance using the access token
 g = Github(access_token)
 
 # Replace 'OWNER' and 'REPO' with the owner and repository name
-owner = 'Bhargavi-stanleymldl'
-repo_name = 'Bhargavi'
+owner = 'kailash8465'
+repo_name = 'final_test'
 # Get the repository
 repo = g.get_repo(f'{owner}/{repo_name}')
 
