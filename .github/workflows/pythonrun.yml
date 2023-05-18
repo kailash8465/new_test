@@ -16,6 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+         repo-token: ${{ secrets.GITHUB_TOKEN }}
+
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -27,8 +30,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
     
-    - name: setup_token
-      run: echo "GITHUB_TOKEN=${{secrets.TOKEN}}" >> $GITHUB_ENV
 
     - name: Run python!
       run: |
