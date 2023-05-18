@@ -4,7 +4,7 @@ import os
 import base64
 
 # GitHub access token with appropriate permissions
-access_token = os,environ.get('ACCESS_TOKEN')
+access_token = os.environ.get('ACCESS_TOKEN')
 
 # Source and destination repositories information
 source_owner = 'kailash8465'
@@ -25,29 +25,29 @@ files_to_copy = [
 # Add more files as necessary
 ]
 def copy_file(source_path, destination_path):
-url = f"https://api.github.com/repos/{source_owner}/{source_repo}/contents/{source_path}"
-headers = {
-'Authorization': f'Token {access_token}',
-'Accept': 'application/vnd.github.v3+json'
-}
-response = requests.get(url, headers=headers)
-response_json = response.json()
+  url = f"https://api.github.com/repos/{source_owner}/{source_repo}/contents/{source_path}"
+  headers = {
+  'Authorization': f'Token {access_token}',
+  'Accept': 'application/vnd.github.v3+json'
+  }
+  response = requests.get(url, headers=headers)
+  response_json = response.json()
 
-content = response_json['content']
-encoded_content = content.encode('utf-8')
-decoded_content = base64.b64decode(encoded_content)
+  content = response_json['content']
+  encoded_content = content.encode('utf-8')
+  decoded_content = base64.b64decode(encoded_content)
 
-destination_url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}/contents/{destination_path}"
-payload = {
-'message': 'Copy file',
-'content': base64.b64encode(decoded_content).decode('utf-8')
-}
-response = requests.put(destination_url, headers=headers, data=json.dumps(payload))
+  destination_url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}/contents/{destination_path}"
+  payload = {
+  'message': 'Copy file',
+  'content': base64.b64encode(decoded_content).decode('utf-8')
+  }
+  response = requests.put(destination_url, headers=headers, data=json.dumps(payload))
 
-if response.status_code == 201:
-print(f"File {destination_path} copied successfully.")
-else:
-print(f"Failed to copy file {destination_path}. Error: {response.text}")
+  if response.status_code == 201:
+  print(f"File {destination_path} copied successfully.")
+  else:
+  print(f"Failed to copy file {destination_path}. Error: {response.text}")
 for file in files_to_copy:
 source_path = file['source_path']
 destination_path = file['destination_path']
