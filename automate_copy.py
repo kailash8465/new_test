@@ -44,9 +44,9 @@ def copy_file(source_path, destination_path):
   }
   response = requests.put(destination_url, headers=headers, data=json.dumps(payload))
   if response.status_code == 201:
-  print(f"File {destination_path} copied successfully.")
+    print(f"File {destination_path} copied successfully.")
   else:
-  print(f"Failed to copy file {destination_path}. Error: {response.text}")
+    print(f"Failed to copy file {destination_path}. Error: {response.text}")
 for file in files_to_copy:
   source_path = file['source_path']
   destination_path = file['destination_path']
