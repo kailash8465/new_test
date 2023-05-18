@@ -1,6 +1,7 @@
 from github import Github
+import os
 # Replace 'ACCESS_TOKEN' with your actual access token
-access_token = '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'
+access_token = os.environ.get('ACCESS_TOKEN')
 # Create a PyGithub instance using the access token
 g = Github(access_token)
 
