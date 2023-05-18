@@ -32,6 +32,7 @@ def copy_file(source_path, destination_path):
   }
   response = requests.get(url, headers=headers)
   response_json = response.json()
+  print(response_json)
 
   content = response_json['content']
   encoded_content = content.encode('utf-8')
