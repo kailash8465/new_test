@@ -5,7 +5,7 @@ import base64
 
 # GitHub access token with appropriate permissions
 
-access_token = os.environ.get('TOKEN')
+access_token = os.environ.get('GITHUB_ENV')
 
 # Source and destination repositories information
 source_owner = 'kailash8465'
