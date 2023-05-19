@@ -3,7 +3,7 @@ import os
 
 
 # Replace 'ACCESS_TOKEN' with your actual access token
-access_token = os.environ.get('ACCESS_TOKEN')
+access_token = os.environ.get('token')
 # Create a PyGithub instance using the access token
 g = Github(access_token)
 
