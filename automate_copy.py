@@ -52,14 +52,14 @@ def copy_file(source_path, destination_path):
 for file in files_to_copy:
   source_path = file['source_path']
   destination_path = file['destination_path']
-  branch_name = feature/devops
+  branch_name = 'feature/devops'
   copy_file(source_path, destination_path,branch_name)
-  branch_name = feature/devops-master
+  branch_name = 'feature/devops-master'
   copy_file(source_path, destination_path,branch_name)
   
 payload = {
 "name": repository,
-"default_branch": develop
+"default_branch": 'develop'
 }
 url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}"
 response = requests.patch(url, headers=headers, json=payload)
