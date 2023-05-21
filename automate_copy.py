@@ -55,8 +55,8 @@ for file in files_to_copy:
   branch_name = 'feature/devops'
   branch_name1 = 'master'
   copy_file(source_path, destination_path,branch_name,branch_name1)
-  branch_name = 'feature/devops-master'
-  copy_file(source_path, destination_path,branch_name,branch_name1)
+#   branch_name = 'feature/devops-master'
+#   copy_file(source_path, destination_path,branch_name,branch_name1)
   
 payload = {
 "name": {destination_repo},
