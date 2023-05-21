@@ -34,4 +34,4 @@ jobs:
 
     - name: Run python!
       run: |
-        python automate_git1.py
+        python automate_copy.py
