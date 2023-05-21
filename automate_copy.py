@@ -33,16 +33,17 @@ def copy_file(source_path, destination_path ,branch_name,branch_name1):
   url = f"https://api.github.com/repos/{source_owner}/{source_repo}/contents/{source_path}?ref={branch_name1}"
   response = requests.get(url, headers=headers)
   response_json = response.json()
-  print(response_json)
+#   print(response_json)
 
   content = response_json['content']
   encoded_content = content.encode('utf-8')
   decoded_content = base64.b64decode(encoded_content)
 
-  destination_url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}/contents/{destination_path}?ref={branch_name}"
+  destination_url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}/contents/{destination_path}"
   payload = {
   'message': 'Copy file',
   'content': base64.b64encode(decoded_content).decode('utf-8')
+  'branch': {branch_name}
   }
   response = requests.put(destination_url, headers=headers, data=json.dumps(payload))
   if response.status_code == 201:
@@ -58,13 +59,13 @@ for file in files_to_copy:
 #   branch_name = 'feature/devops-master'
 #   copy_file(source_path, destination_path,branch_name,branch_name1)
   
-payload = {
-"name": {destination_repo},
-"default_branch": 'develop'
-}
-url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}"
-response = requests.patch(url, headers=headers, json=payload)
-if response.status_code == 200:
-  print(f"The default branch for {destination_owner}/{destination_repo} has been set to {branch_name}.")
-else:
-  print(f"An error occurred. Status code: {response.status_code}, Response: {response.text}")
+# payload = {
+# "name": {destination_repo},
+# "default_branch": 'develop'
+# }
+# url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}"
+# response = requests.patch(url, headers=headers, json=payload)
+# if response.status_code == 200:
+#   print(f"The default branch for {destination_owner}/{destination_repo} has been set to {branch_name}.")
+# else:
+#   print(f"An error occurred. Status code: {response.status_code}, Response: {response.text}")
