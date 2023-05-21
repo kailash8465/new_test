@@ -29,8 +29,8 @@ files_to_copy = [
 }
 # Add more files as necessary
 ]
-def copy_file(source_path, destination_path ,branch_name):
-  url = f"https://api.github.com/repos/{source_owner}/{source_repo}/contents/{source_path}"
+def copy_file(source_path, destination_path ,branch_name,branch_name1):
+  url = f"https://api.github.com/repos/{source_owner}/{source_repo}/contents/{source_path}?ref={branch_name1}"
   response = requests.get(url, headers=headers)
   response_json = response.json()
 #   print(response_json)
@@ -53,12 +53,13 @@ for file in files_to_copy:
   source_path = file['source_path']
   destination_path = file['destination_path']
   branch_name = 'feature/devops'
-  copy_file(source_path, destination_path,branch_name)
+  branch_name1 = 'main'
+  copy_file(source_path, destination_path,branch_name,branch_name1)
   branch_name = 'feature/devops-master'
-  copy_file(source_path, destination_path,branch_name)
+  copy_file(source_path, destination_path,branch_name,branch_name1)
   
 payload = {
-"name": {destinatioin/repo},
+"name": {destination_repo},
 "default_branch": 'develop'
 }
 url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}"
