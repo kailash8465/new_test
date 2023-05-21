@@ -64,6 +64,6 @@ payload = {
 url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}"
 response = requests.patch(url, headers=headers, json=payload)
 if response.status_code == 200:
-print(f"The default branch for {username}/{repository} has been set to {branch_name}.")
+  print(f"The default branch for {username}/{repository} has been set to {branch_name}.")
 else:
-print(f"An error occurred. Status code: {response.status_code}, Response: {response.text}")
+  print(f"An error occurred. Status code: {response.status_code}, Response: {response.text}")
