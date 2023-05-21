@@ -13,7 +13,7 @@ source_branch = 'master'  # Add the source branch name here
 
 destination_owner = 'kailash8465'
 destination_repo = 'final_test'
-destination_branch = 'feature/devops'  # Add the destination branch name here
+destination_branches = ['feature/devops', 'feature/devops-master']  # Add the destination branch names here
 
 # List of files to be copied
 files_to_copy = [
@@ -28,7 +28,24 @@ files_to_copy = [
     # Add more files as necessary
 ]
 
-def copy_file(source_path, destination_path):
+def set_default_branch(repo_owner, repo_name, default_branch):
+    url = f"https://api.github.com/repos/{repo_owner}/{repo_name}"
+    headers = {
+        'Authorization': f'Token {access_token}',
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    }
+    payload = {
+        'default_branch': default_branch
+    }
+    response = requests.patch(url, headers=headers, data=json.dumps(payload))
+    if response.status_code == 200:
+        print(f"Default branch set to {default_branch} successfully for repository {repo_name}.")
+    else:
+        print(f"Failed to set default branch. Error: {response.text}")
+
+
+def copy_file(source_path, destination_path, destination_branch):
     source_url = f"https://api.github.com/repos/{source_owner}/{source_repo}/contents/{source_path}?ref={source_branch}"
     
     headers = {
@@ -54,11 +71,15 @@ def copy_file(source_path, destination_path):
 
     response = requests.put(destination_url, headers=headers, data=json.dumps(payload))
     if response.status_code == 201:
-        print(f"File {destination_path} copied successfully.")
+        print(f"File {destination_path} copied successfully to branch {destination_branch}.")
     else:
-        print(f"Failed to copy file {destination_path}. Error: {response.text}")
+        print(f"Failed to copy file {destination_path} to branch {destination_branch}. Error: {response.text}")
 
+        
+set_default_branch(destination_owner, destination_repo, "develop")
+# Copy files to each destination branch
 for file in files_to_copy:
     source_path = file['source_path']
     destination_path = file['destination_path']
-    copy_file(source_path, destination_path)
+    for branch in destination_branches:
+        copy_file(source_path, destination_path, branch)
