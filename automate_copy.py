@@ -29,7 +29,7 @@ files_to_copy = [
 }
 # Add more files as necessary
 ]
-def copy_file(source_path, destination_path):
+def copy_file(source_path, destination_path ,branch_name):
   url = f"https://api.github.com/repos/{source_owner}/{source_repo}/contents/{source_path}"
   response = requests.get(url, headers=headers)
   response_json = response.json()
