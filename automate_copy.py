@@ -33,7 +33,7 @@ def copy_file(source_path, destination_path ,branch_name,branch_name1):
   url = f"https://api.github.com/repos/{source_owner}/{source_repo}/contents/{source_path}?ref={branch_name1}"
   response = requests.get(url, headers=headers)
   response_json = response.json()
-#   print(response_json)
+  print(response_json)
 
   content = response_json['content']
   encoded_content = content.encode('utf-8')
