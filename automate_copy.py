@@ -33,7 +33,7 @@ def copy_file(source_path, destination_path ,branch_name):
   url = f"https://api.github.com/repos/{source_owner}/{source_repo}/contents/{source_path}"
   response = requests.get(url, headers=headers)
   response_json = response.json()
-  print(response_json)
+#   print(response_json)
 
   content = response_json['content']
   encoded_content = content.encode('utf-8')
@@ -58,12 +58,12 @@ for file in files_to_copy:
   copy_file(source_path, destination_path,branch_name)
   
 payload = {
-"name": repository,
+"name": {destinatioin/repo},
 "default_branch": 'develop'
 }
 url = f"https://api.github.com/repos/{destination_owner}/{destination_repo}"
 response = requests.patch(url, headers=headers, json=payload)
 if response.status_code == 200:
-  print(f"The default branch for {username}/{repository} has been set to {branch_name}.")
+  print(f"The default branch for {destination_owner}/{destination_repo} has been set to {branch_name}.")
 else:
   print(f"An error occurred. Status code: {response.status_code}, Response: {response.text}")
