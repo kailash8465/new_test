@@ -53,7 +53,7 @@ for file in files_to_copy:
   source_path = file['source_path']
   destination_path = file['destination_path']
   branch_name = 'feature/devops'
-  branch_name1 = 'main'
+  branch_name1 = 'master'
   copy_file(source_path, destination_path,branch_name,branch_name1)
   branch_name = 'feature/devops-master'
   copy_file(source_path, destination_path,branch_name,branch_name1)
