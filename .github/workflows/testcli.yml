@@ -1,0 +1,20 @@
+name: Set Secret with gh CLI
+on:
+ workflow_dispatch:
+
+jobs:
+  set_secret:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set secret with gh CLI
+        run: |
+          echo "my_secret_value" | gh secret set MY_SECRET --repo ${{ github.repository }}
+
+      - name: Verify secret was set
+        run: |
+          gh secret list --repo ${{ github.repository }}
