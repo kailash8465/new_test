@@ -13,7 +13,7 @@ jobs:
 
       - name: Set secret with gh CLI
         run: |
-          echo "my_secret_value" | gh secret set MY_SECRET --repo ${{ github.repository }}
+          echo "my_secret_value" | gh secret set MY_SECRET --repo kailash8465/final_test
 
       - name: Verify secret was set
         run: |
