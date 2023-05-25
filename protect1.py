@@ -31,6 +31,6 @@ def enable_branch_protection(repo_owner, repo_name, branch_name, access_token):
 repo_owner = "kailash8465"
 repo_name = "final_test"
 branch_name = "feature/devops-master"  # or "master"
-github_access_token = so.environ.get('token')
+github_access_token = os.environ.get('token')
 
 enable_branch_protection(repo_owner, repo_name, branch_name, github_access_token)
