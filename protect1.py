@@ -1,38 +1,36 @@
 import os
-from github import Github
+from graphqlclient import GraphQLClient
 
 def enable_branch_protection(repo_owner, repo_name, branch_name, access_token):
-    g = Github(access_token)
-    repo = g.get_repo(f"{repo_owner}/{repo_name}")
-    branch = repo.get_branch(branch_name)
+    client = GraphQLClient('https://api.github.com/graphql')
+    client.inject_token(f'Bearer {access_token}')
 
-    if branch_name == "develop":
-        # Apply branch protection settings for "develop" branch
-        branch.edit_protection(
-            required_approving_review_count=1,
-            dismiss_stale_reviews=True,
-        )
-    elif branch_name == "feature/devops-master":
-        # Apply branch protection settings for "master" branch
-        branch.edit_protection(
-            required_approving_review_count=1,
-            dismiss_stale_reviews=True,
-            require_code_owner_reviews=True,
-            restrictions={
-#                 "users": [],
-                "teams": ['procter-gamble/teams/c360-repo-admins']
-#                 "apps": [],
-#                 "users_url": [],
-#                 "teams_url": [],
-#                 "apps_url": [],
-#                 "url": "https://api.github.com/orgs/procter-gamble/teams/c360-repo-admins"
-            }
-        )
+    query = """
+    mutation {
+      updateBranchProtectionRule(input: {
+        repositoryId: "<repository_id>",
+        pattern: "<branch_name>",
+        requiresCodeOwnerReviews: true,
+        isAdminEnforced: false,
+        dismissesStaleReviews: true,
+        requiresApprovingReviews: true,
+        restrictsReviewDismissals: true,
+        reviewDismissalActorIds: ["procter-gamble/c360-repo-admins"]
+      }) {
+        branchProtectionRule {
+          id
+        }
+      }
+    }
+    """
+
+    response = client.execute(query.replace("<repository_id>", repo_owner+"/"+repo_name).replace("<branch_name>", branch_name).replace("<team_id>", "<team_id>"))
+    print(response)
 
 # Example usage
 repo_owner = "kailash8465"
 repo_name = "final_test"
 branch_name = "feature/devops-master"  # or "master"
-github_access_token = os.environ.get('token')
+github_access_token = so.environ.get('token')
 
 enable_branch_protection(repo_owner, repo_name, branch_name, github_access_token)
