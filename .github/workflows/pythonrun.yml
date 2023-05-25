@@ -35,4 +35,4 @@ jobs:
 
     - name: Run python!
       run: |
-        python protect.py
+        python protect1.py
