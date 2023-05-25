@@ -1,4 +1,5 @@
 import requests
+import os
 
 def protect_github_branch(repo_owner, repo_name, branch_name, access_token):
     headers = {
