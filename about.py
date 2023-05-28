@@ -21,7 +21,7 @@ def update_github_repository(repo_owner, repo_name, access_token, description=No
 
 # Example usage
 repo_owner = "kailash8465"
-repo_name = os.envriron.get('REPO')
+repo_name = os.environ.get('REPO')
 repos = repo_name.split(',')
 github_access_token = os.environ.get('token')
 for repo in repos:
