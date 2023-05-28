@@ -19,7 +19,14 @@ jobs:
 
       - name: Iterate over list elements
         run: |
-          for element in "${LIST_ARRAY[@]}"; do
+          for element in "${{ env.LIST_VARIABLE }}"; do
             echo "Element: $element"
             # Perform actions using the element as needed
           done
+
+
+
+
+
+
+
