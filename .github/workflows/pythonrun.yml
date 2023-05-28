@@ -10,6 +10,7 @@ on:
 #     branches: [ main ]
 env:
   token: ${{ secrets.TOKEN }}
+  REPO: 'frst_automation,new_test_repo'
 
 jobs:
   job-execute-pytest:
