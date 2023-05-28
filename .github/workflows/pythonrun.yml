@@ -34,4 +34,4 @@ jobs:
 
     - name: Run python!
       run: |
-        python protect1.py
+        python about.py
