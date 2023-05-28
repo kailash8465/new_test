@@ -1,0 +1,25 @@
+name: GitHub Workflow
+
+on:
+ workflow_dispatch:
+
+env:
+  LIST_VARIABLE: 'element1,element2,element3'
+
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Split list into elements
+        id: split_list
+        run: |
+          LIST_VARIABLE=${{ env.LIST_VARIABLE }}
+          IFS=',' read -ra LIST_ARRAY <<< "$LIST_VARIABLE"
+
+      - name: Iterate over list elements
+        run: |
+          for element in "${LIST_ARRAY[@]}"; do
+            echo "Element: $element"
+            # Perform actions using the element as needed
+          done
