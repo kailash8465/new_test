@@ -11,14 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Split list into elements
-        id: split_list
+      - name: Iterate over list elements
         run: |
           LIST_VARIABLE=${{ env.LIST_VARIABLE }}
           IFS=',' read -ra LIST_ARRAY <<< "$LIST_VARIABLE"
-
-      - name: Iterate over list elements
-        run: |
           for element in "${{ env.LIST_VARIABLE }}"; do
             echo "Element: $element"
             # Perform actions using the element as needed
