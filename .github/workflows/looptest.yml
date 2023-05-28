@@ -15,7 +15,7 @@ jobs:
         run: |
           LIST_VARIABLE=${{ env.LIST_VARIABLE }}
           IFS=',' read -ra LIST_ARRAY <<< "$LIST_VARIABLE"
-          for element in "${{ env.LIST_VARIABLE }}"; do
+          for element in "${LIST_ARRAY[@]}"; do
             echo "Element: $element"
             # Perform actions using the element as needed
           done
