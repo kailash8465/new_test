@@ -21,14 +21,15 @@ def update_github_repository(repo_owner, repo_name, access_token, description=No
 
 # Example usage
 repo_owner = "kailash8465"
-repo_name = "new_test_repo"
+repo_name = os.envriron.get('REPO')
+repos = repo_name.split(',')
 github_access_token = os.environ.get('token')
-if repo_name.startswith('c360'):
-  new_description = f"c360-{repo_name}"
-elif repo_name.startswith('cdp'):
-  new_description = f"cdp-{repo_name}"
-else:
-  new_description = repo_name
-new_topics = ['github-actions-enabled','owner-dq5209','mcost-center-1000505146','pg-digital-experiences']
-
-update_github_repository(repo_owner, repo_name, github_access_token, description=new_description, topics=new_topics)
+for repo in repos:
+    if repo.startswith('c360'):
+      new_description = f"c360-{repo}"
+    elif repo.startswith('cdp'):
+      new_description = f"cdp-{repo}"
+    else:
+      new_description = repo
+    new_topics = ['github-actions-enabled','owner-dq5209','mcost-center-1000505146','pg-digital-experiences','test_topic']
+    update_github_repository(repo_owner, repo, github_access_token, description=new_description, topics=new_topics)
