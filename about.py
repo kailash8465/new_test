@@ -21,7 +21,7 @@ def update_github_repository(repo_owner, repo_name, access_token, description=No
 
 # Example usage
 repo_owner = "kailash8465"
-repo_name = "final_test"
+repo_name = "new_test_repo"
 github_access_token = os.environ.get('token')
 if repo_name.startswith('c360'):
   new_description = f"c360-{repo_name}"
