@@ -24,7 +24,7 @@ def create_environment_with_reviewers(ENVIRONMENT_NAME):
         }
     }
     
-    response = requests.put(url, headers=headers, json=data)
+    response = requests.post(url, headers=headers, json=data)
     
     if response.status_code == 201:
         print("Environment created successfully.")
