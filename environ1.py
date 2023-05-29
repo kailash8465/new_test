@@ -4,7 +4,7 @@ api_token = os.environ.get('token')
 
 headers = {
     "Accept": "application/vnd.github+json",
-    "Authorization": f"Bearer {api_token}"
+    "Authorization": f"Bearer {api_token}",
     "X-GitHub-Api-Version": "2022-11-28"
 }
 
