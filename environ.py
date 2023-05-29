@@ -9,7 +9,7 @@ import requests
 def create_environment_with_reviewers(ENVIRONMENT_NAME):
     url = "https://api.github.com/repos/OWNER/REPO/deployments/ENVIRONMENT_NAME/statuses"
 #     api_token = "YOUR-TOKEN"
-    user_id = 'Bhargavi-stanleymldl'  # Replace with the actual team ID
+    user_id = 60359651  # Replace with the actual team ID
 
     headers = {
         "Accept": "application/vnd.github+json",
@@ -22,7 +22,7 @@ def create_environment_with_reviewers(ENVIRONMENT_NAME):
 #         "environment_url": "https://example.com",
         "required_reviewers": [
             {
-                "type": "Team",
+                "type": "User",
                 "id": user_id
             }
         ]
