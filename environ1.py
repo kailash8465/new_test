@@ -1,30 +1,27 @@
 import requests
-import json
 import os
-
 api_token = os.environ.get('token')
 
-def create_github_environment(repository, environment_name):
-    api_url = f"https://api.github.com/repos/{repository}/environments"
-    headers = {
-        "Accept": "application/vnd.github.v3+json",
-        "Authorization": f"Bearer {api_token}"
+headers = {
+    "Accept": "application/vnd.github+json",
+    "Authorization": f"Bearer {api_token}"
+    "X-GitHub-Api-Version": "2022-11-28"
+}
+
+data = {
+    "wait_timer": 30,
+    "reviewers": [
+        {"type": "User", "id": 60359651}
+    ],
+    "deployment_branch_policy": {
+        "protected_branches": False,
+        "custom_branch_policies": True
     }
-    payload = {
-        "name": environment_name,
-        "auto_merge": False,
-        "short_name": environment_name[:20],
-        "production": False
-    }
+}
 
-    response = requests.post(api_url, headers=headers, data=json.dumps(payload))
-    if response.status_code == 201:
-        print("Environment created successfully!")
-    else:
-        print("Failed to create environment. Error:", response.text)
+url = "https://api.github.com/repos/kailash8465/final_test/environments/stg-deploy"
 
-# Example usage
-repository = "kailash8465/final_test"
-environment_name = "my-new-environment"
+response = requests.put(url, headers=headers, json=data)
 
-create_github_environment(repository, environment_name)
+print("Status code:", response.status_code)
+print("Response:", response.json())
