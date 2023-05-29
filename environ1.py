@@ -2,11 +2,13 @@ import requests
 import json
 import os
 
+api_token = os.environ.get('token')
+
 def create_github_environment(repository, environment_name):
     api_url = f"https://api.github.com/repos/{repository}/environments"
     headers = {
         "Accept": "application/vnd.github.v3+json",
-        "Authorization": "Bearer os.environ.get('token')"
+        "Authorization": f"Bearer {api_token}"
     }
     payload = {
         "name": environment_name,
