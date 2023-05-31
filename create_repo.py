@@ -16,7 +16,7 @@ def create_private_repo_with_auto_init(repository_name):
         "private": True
     }
 
-    create_repo_url = f"https://api.github.com/user/repos/{owner}"
+    create_repo_url = f"https://api.github.com/user/{owner}/repos"
     response = requests.post(create_repo_url, headers=headers, json=data)
 
     if response.status_code == 201:
