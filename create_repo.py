@@ -10,7 +10,7 @@ def create_private_repo_with_auto_init(repository_name):
 }
 
 data = {
-    "name": repository_name,
+    "name": {repository_name},
     "auto_init": True,
     'private': True,
 }
