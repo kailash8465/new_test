@@ -3,7 +3,7 @@ import requests
 
 token=os.environ.get('token')
 owner='kailash8465'
-def create_private_repo_with_auto_init(epo_name):
+def create_private_repo_with_auto_init(repo_name):
     url = f'https://api.github.com/repos/{owner}/{repo_name}'
     headers = {'Authorization': f'token {token}'}
     payload = {
