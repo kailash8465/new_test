@@ -3,24 +3,25 @@ import requests
 
 api_token=os.environ.get('token')
 owner='kailash8465'
-def create_private_repo_with_auto_init(repo_name):
-    url = f'https://api.github.com/users/{owner}/repos/{repo_name}'
+def create_private_repo_with_auto_init(repository_name):
     headers = {
-        "Accept": "application/vnd.github+json",
-        "Authorization": f"Bearer {api_token}"
-    }
-    payload = {
-        'name': repo_name,
-        'private': True,
-        'auto_init': True
-    }
-    
-    response = requests.post(url, json=payload, headers=headers)
-    
-    if response.status_code == 201:
-        print(f"Private repository '{owner}/{repo_name}' with auto initialization created successfully!")
-    else:
-        print(f"Error creating repository: {response.status_code} - {response.text}")
+    "Authorization": f"token {api_token}",
+    "Accept": "application/vnd.github.v3+json"
+}
+
+data = {
+    "name": repository_name,
+    "auto_init": True,
+    'private': True,
+}
+
+create_repo_url = f"https://api.github.com/user/{owner}/repos"
+response = requests.post(create_repo_url, headers=headers, json=data)
+
+if response.status_code == 201:
+    print("New repository created successfully!")
+else:
+    print("Failed to create repository:", response.json()["message"])
 
 # Replace 'YOUR_GITHUB_TOKEN' with your actual GitHub token
 # Replace 'your-username' with the desired owner or organization name
