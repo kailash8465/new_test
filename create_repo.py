@@ -4,7 +4,7 @@ import requests
 api_token=os.environ.get('token')
 owner='kailash8465'
 def create_private_repo_with_auto_init(repo_name):
-    url = f'https://api.github.com/repos/{owner}/{repo_name}'
+    url = f'https://api.github.com/users/{owner}/{repo_name}'
     headers = {
         "Accept": "application/vnd.github+json",
         "Authorization": f"Bearer {api_token}"
