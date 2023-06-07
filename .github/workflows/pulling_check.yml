@@ -2,6 +2,12 @@ name: execute-pytest
 
 on:
  workflow_dispatch:
+ workflow_call:
+   secrets:
+     GIT_USER: 
+       required: true
+     GIT_TOKEN:
+       required: true
 env:
   DEPLOYMENT_NAME: cot-pubsub-lookupservice
   REPOSITORY: gcr.io/cicd-spinnaker-dev-6034/int-microservices
