@@ -1,0 +1,68 @@
+name: execute-pytest
+
+on:
+ workflow_dispatch:
+env:
+  DEPLOYMENT_NAME: cot-pubsub-lookupservice
+  REPOSITORY: gcr.io/cicd-spinnaker-dev-6034/int-microservices
+  SONAR_PROJECT_ID: cot-janrain-lookup
+  SONAR_PROJECT_KEY: cot-pubsub-lookupservice
+  NAMESPACE: c360-int
+  SHORTSHA: ${GITHUB_SHA::7}
+jobs:  
+  Docker-Build: 
+    uses: procter-gamble/c360-cicd-pipelines/.github/workflows/docker-build.yaml@develop
+    with:
+      REPOSITORY: gcr.io/cicd-spinnaker-dev-6034/int-microservices
+      DEPLOYMENT_NAME: cot-pubsub-lookupservice
+      SHORTSHA: ${GITHUB_SHA::7}
+    secrets:
+      user: ${{ secrets.GIT_USER }}
+      token: ${{ secrets.GIT_TOKEN }}
+  Helm-STG-Deploy:
+    name: Deploy to Stg
+    needs: Docker-Build
+    runs-on: [ self-hosted, Linux, de-c360-runners-stg ]
+    environment:
+      name: STG Deployment Approval
+    steps:  
+      - uses: actions/checkout@v1
+      - name: Deploy 
+        run: |-
+           cd .helm
+           ls -ltr
+           helm upgrade --install ${{ env.DEPLOYMENT_NAME }} ${{ env.DEPLOYMENT_NAME }} -f ./${{ env.DEPLOYMENT_NAME }}/values.yaml -f ./${{ env.DEPLOYMENT_NAME }}/values-staging.yaml -n ${{ env.NAMESPACE }}
+      - name: Publishing the message
+        run: |-        
+          gcloud pubsub topics publish AzureCICDInput --message='{"build no.":"'${{ env.SHORTSHA }}'","service_name":"'${{ env.SONAR_PROJECT_ID }}'","Branch_name":"'$GITHUB_REF'","Requestor":"'$GITHUB_ACTOR'"}' --project=dbce-c360-isl-stg-6c25 --attribute=key="${{ env.SONAR_PROJECT_ID }}"
+      - name: Creating function
+        timeout-minutes: 15
+        shell: bash
+        run: |
+          echo 'Creating the function'
+          function pull_msg 
+          {
+            message=`gcloud pubsub subscriptions pull AzureCICDOutput.AUTO --project=dbce-c360-isl-stg-6c25 --format=text --filter=message.attributes.key:"'${{ env.SONAR_PROJECT_ID }}'" --auto-ack --verbosity=none | grep -i message.data`
+            echo $message     
+          msg_value=$(echo $message | awk '{print $2}')
+            echo $msg_value 
+          decrypt=$(echo -n "$msg_value"| base64 -d | awk  '{print $2}' | sed 's/"//' |sed 's/"//' | sed 's/}//')
+            echo $decrypt          
+          if [[ $decrypt == "Pass" ]]
+          then 
+            echo 'Build Testing is successful '
+            exit 0                
+          elif [[ $decrypt == "Fail" ]]
+          then 
+            echo "Build failed rolling back the deployment"
+            helm rollback ${{ env.SONAR_PROJECT_KEY }} --debug --force --cleanup-on-fail --recreate-pods -n ${{ env.NAMESPACE }}
+          else
+            echo 'polling msg'
+          sleep 10s
+            pull_msg
+          fi
+          }
+          echo 'Running the function' 
+          pull_msg
+          RESULT=$decrypt
+          echo $RESULT
